@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HTML的内容安全策略 | 林中路</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="
+是什么
+
+HTTP 协议的 Content-Security-Policy 响应头允许网站管理员控制用户代理可以为给定页面加载的资源
+
+有什么用
+
+可以防止[[Web安全详解#跨站点脚本攻击]]
+
+语法
+
+Content-Security-Policy: ;
+
+指令`<po ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.6d0d6f13.css" as="style"><link rel="preload" href="/assets/js/app.cd8205c8.js" as="script"><link rel="preload" href="/assets/js/11.4c288b74.js" as="script"><link rel="preload" href="/assets/js/106.b702757c.js" as="script"><link rel="prefetch" href="/assets/js/1.c492b4cd.js"><link rel="prefetch" href="/assets/js/10.5c791580.js"><link rel="prefetch" href="/assets/js/100.98ff7760.js"><link rel="prefetch" href="/assets/js/101.e5cd16d7.js"><link rel="prefetch" href="/assets/js/102.cc9bc85b.js"><link rel="prefetch" href="/assets/js/103.7b07b598.js"><link rel="prefetch" href="/assets/js/104.ee58d457.js"><link rel="prefetch" href="/assets/js/105.48c57f25.js"><link rel="prefetch" href="/assets/js/107.8122f1ef.js"><link rel="prefetch" href="/assets/js/108.51e66dbe.js"><link rel="prefetch" href="/assets/js/109.3145253b.js"><link rel="prefetch" href="/assets/js/110.f9990065.js"><link rel="prefetch" href="/assets/js/111.3263bd3f.js"><link rel="prefetch" href="/assets/js/112.9071b5e2.js"><link rel="prefetch" href="/assets/js/113.f131242e.js"><link rel="prefetch" href="/assets/js/114.7a6e09f7.js"><link rel="prefetch" href="/assets/js/115.508d99ac.js"><link rel="prefetch" href="/assets/js/116.f4900a92.js"><link rel="prefetch" href="/assets/js/117.e5957144.js"><link rel="prefetch" href="/assets/js/118.062eb3c1.js"><link rel="prefetch" href="/assets/js/119.93634bcc.js"><link rel="prefetch" href="/assets/js/12.c3b16095.js"><link rel="prefetch" href="/assets/js/120.1bada0ab.js"><link rel="prefetch" href="/assets/js/121.7d55e294.js"><link rel="prefetch" href="/assets/js/122.b7f7c837.js"><link rel="prefetch" href="/assets/js/123.3a0b4694.js"><link rel="prefetch" href="/assets/js/124.bd458b77.js"><link rel="prefetch" href="/assets/js/125.8ca612c9.js"><link rel="prefetch" href="/assets/js/126.35bccb3e.js"><link rel="prefetch" href="/assets/js/127.9b3097f5.js"><link rel="prefetch" href="/assets/js/128.5833cf40.js"><link rel="prefetch" href="/assets/js/129.38ec9907.js"><link rel="prefetch" href="/assets/js/13.91404f5a.js"><link rel="prefetch" href="/assets/js/130.932a54c4.js"><link rel="prefetch" href="/assets/js/131.f4ab894a.js"><link rel="prefetch" href="/assets/js/14.ef93462f.js"><link rel="prefetch" href="/assets/js/15.83829c35.js"><link rel="prefetch" href="/assets/js/16.d245c760.js"><link rel="prefetch" href="/assets/js/17.4a9f3c99.js"><link rel="prefetch" href="/assets/js/18.75ce45c7.js"><link rel="prefetch" href="/assets/js/19.b86d35ae.js"><link rel="prefetch" href="/assets/js/20.9657eb2e.js"><link rel="prefetch" href="/assets/js/21.f89cf353.js"><link rel="prefetch" href="/assets/js/22.746aec5f.js"><link rel="prefetch" href="/assets/js/23.ca2ee980.js"><link rel="prefetch" href="/assets/js/24.e1eeb0f4.js"><link rel="prefetch" href="/assets/js/25.f96e0147.js"><link rel="prefetch" href="/assets/js/26.cc4cf83e.js"><link rel="prefetch" href="/assets/js/27.f940e542.js"><link rel="prefetch" href="/assets/js/28.99771a3c.js"><link rel="prefetch" href="/assets/js/29.841b64b0.js"><link rel="prefetch" href="/assets/js/30.772e1ff4.js"><link rel="prefetch" href="/assets/js/31.7e0b62c5.js"><link rel="prefetch" href="/assets/js/32.cf3d5fb6.js"><link rel="prefetch" href="/assets/js/33.b338e29a.js"><link rel="prefetch" href="/assets/js/34.8b8356fe.js"><link rel="prefetch" href="/assets/js/35.1b12a1f7.js"><link rel="prefetch" href="/assets/js/36.547e2f8d.js"><link rel="prefetch" href="/assets/js/37.36a240bd.js"><link rel="prefetch" href="/assets/js/38.4f6b92e3.js"><link rel="prefetch" href="/assets/js/39.5133d0dd.js"><link rel="prefetch" href="/assets/js/4.524efd0b.js"><link rel="prefetch" href="/assets/js/40.8c765af6.js"><link rel="prefetch" href="/assets/js/41.b7234e21.js"><link rel="prefetch" href="/assets/js/42.b5ac212a.js"><link rel="prefetch" href="/assets/js/43.5d1b3b6c.js"><link rel="prefetch" href="/assets/js/44.eda633f8.js"><link rel="prefetch" href="/assets/js/45.39f5263b.js"><link rel="prefetch" href="/assets/js/46.f1fbfada.js"><link rel="prefetch" href="/assets/js/47.ed969447.js"><link rel="prefetch" href="/assets/js/48.e1867366.js"><link rel="prefetch" href="/assets/js/49.c2a4bc6b.js"><link rel="prefetch" href="/assets/js/5.a180cf14.js"><link rel="prefetch" href="/assets/js/50.da77d6a3.js"><link rel="prefetch" href="/assets/js/51.4183e6ab.js"><link rel="prefetch" href="/assets/js/52.b18add11.js"><link rel="prefetch" href="/assets/js/53.08c1d448.js"><link rel="prefetch" href="/assets/js/54.9edeb19b.js"><link rel="prefetch" href="/assets/js/55.9a3ed63e.js"><link rel="prefetch" href="/assets/js/56.dcf34dca.js"><link rel="prefetch" href="/assets/js/57.2123aa49.js"><link rel="prefetch" href="/assets/js/58.c9833b3b.js"><link rel="prefetch" href="/assets/js/59.8da7c174.js"><link rel="prefetch" href="/assets/js/6.529edc8a.js"><link rel="prefetch" href="/assets/js/60.9a70415e.js"><link rel="prefetch" href="/assets/js/61.35935df8.js"><link rel="prefetch" href="/assets/js/62.0e63cfe7.js"><link rel="prefetch" href="/assets/js/63.a52d5a72.js"><link rel="prefetch" href="/assets/js/64.cf7dfcc7.js"><link rel="prefetch" href="/assets/js/65.0220a5ee.js"><link rel="prefetch" href="/assets/js/66.5cd774f3.js"><link rel="prefetch" href="/assets/js/67.d8943555.js"><link rel="prefetch" href="/assets/js/68.7cf24f78.js"><link rel="prefetch" href="/assets/js/69.56501738.js"><link rel="prefetch" href="/assets/js/7.ac95b826.js"><link rel="prefetch" href="/assets/js/70.9626260f.js"><link rel="prefetch" href="/assets/js/71.a466c6f1.js"><link rel="prefetch" href="/assets/js/72.0a678f77.js"><link rel="prefetch" href="/assets/js/73.597ea695.js"><link rel="prefetch" href="/assets/js/74.a0387d5c.js"><link rel="prefetch" href="/assets/js/75.97871f2e.js"><link rel="prefetch" href="/assets/js/76.7d8e44c7.js"><link rel="prefetch" href="/assets/js/77.b53c8e31.js"><link rel="prefetch" href="/assets/js/78.9fef1461.js"><link rel="prefetch" href="/assets/js/79.9af76496.js"><link rel="prefetch" href="/assets/js/8.6bb76bea.js"><link rel="prefetch" href="/assets/js/80.5f7ee3db.js"><link rel="prefetch" href="/assets/js/81.1937e784.js"><link rel="prefetch" href="/assets/js/82.2bdeb675.js"><link rel="prefetch" href="/assets/js/83.e04a8620.js"><link rel="prefetch" href="/assets/js/84.ca8713d0.js"><link rel="prefetch" href="/assets/js/85.40f655ff.js"><link rel="prefetch" href="/assets/js/86.87397155.js"><link rel="prefetch" href="/assets/js/87.798cdf26.js"><link rel="prefetch" href="/assets/js/88.e089f692.js"><link rel="prefetch" href="/assets/js/89.5d842e18.js"><link rel="prefetch" href="/assets/js/9.5b2ac283.js"><link rel="prefetch" href="/assets/js/90.4157be98.js"><link rel="prefetch" href="/assets/js/91.7ed6afe7.js"><link rel="prefetch" href="/assets/js/92.9c50ce3b.js"><link rel="prefetch" href="/assets/js/93.e8e16a70.js"><link rel="prefetch" href="/assets/js/94.cf98a377.js"><link rel="prefetch" href="/assets/js/95.a4b78938.js"><link rel="prefetch" href="/assets/js/96.a7a9f018.js"><link rel="prefetch" href="/assets/js/97.f96c42c9.js"><link rel="prefetch" href="/assets/js/98.ce7378e5.js"><link rel="prefetch" href="/assets/js/99.24959418.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.706cf0ce.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6d0d6f13.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="header"><div class="blog-info" data-v-54e0dde5>
+   林中路
+   <p data-v-54e0dde5>少有人走的路，逐渐向世界显现</p></div> <div class="blog-author-info" data-v-51bc2051><p class="author-head-img" data-v-51bc2051><img src="/assets/img/head-img.8e2d0100.png" alt data-v-51bc2051></p></div> <div class="blog-category-list" data-v-581efa6b><ul data-v-581efa6b></ul></div></div> <div class="content"><div class="template-container" data-v-b70586ba><div class="content" data-v-b70586ba><div class="content__default" data-v-b70586ba><h1 id="html的内容安全策略"><a href="#html的内容安全策略" class="header-anchor">#</a> HTML的内容安全策略</h1> <h2 id="是什么"><a href="#是什么" class="header-anchor">#</a> 是什么</h2> <p>HTTP 协议的 <code>Content-Security-Policy</code> 响应头允许网站管理员控制用户代理可以为给定页面加载的资源</p> <h2 id="有什么用"><a href="#有什么用" class="header-anchor">#</a> 有什么用</h2> <p>可以防止[[Web安全详解#跨站点脚本攻击]]</p> <h2 id="语法"><a href="#语法" class="header-anchor">#</a> 语法</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>Content-Security-Policy: &lt;policy-directive&gt;; &lt;policy-directive&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="指令-policy-directive-说明"><a href="#指令-policy-directive-说明" class="header-anchor">#</a> 指令<code>&lt;policy-directive&gt;</code>说明</h2> <h3 id="获取资源型指令"><a href="#获取资源型指令" class="header-anchor">#</a> 获取资源型指令</h3> <h4 id="可选来源"><a href="#可选来源" class="header-anchor">#</a> 可选来源</h4> <ul><li><code>&lt;host-source&gt;</code> : 因特网主机的名称或IP地址，以及可选的URL方案和/或端口号</li> <li><code>&lt;scheme-source&gt;</code> 某种协议方案，符合该协议的均被视为有效源，例如：<code>http:</code>,<code>https:</code>,<code>blob:</code>,<code>data:</code> 等，注意，必须有冒号</li> <li><code>'self'</code>:  与当前文档同源（包括相同的URL协议地址和端口号），必须包括单引号</li> <li><code>'unsafe-eval'</code> : 允许使用<code>eval（）</code>和类似方法从字符串创建代码。必须包括单引号</li> <li><code>'unsafe-hashes'</code>:允许启用特定的内联事件处理程序。如果只需要允许内联事件处理程序，而不需要内联<code>&lt;script&gt;</code>元素或<code>javascript:url</code>，那么这种方法比使用不安全的内联表达式更安全</li> <li><code>'unsafe-inline'</code>: 允许使用内联资源，例如内联<code>&lt;script&gt;</code>元素、<code>javascript:url</code>、内联事件处理程序和内联<code>&lt;style&gt;</code>元素。单引号是必需的</li> <li><code>'none'</code> : 引用空集合，即不匹配 url。需要单引号</li> <li><code>'nonce-&lt;base64-value&gt;'</code>:使用加密<code>nonce</code>（一次使用的数字）的特定内联脚本的允许列表。服务器必须在每次传输策略时生成唯一的<code>nonce</code>值。提供一个不可用的<code>nonce</code>是至关重要的，因为绕过资源的策略在其他方面是微不足道的。指定<code>nonce</code>会使现代浏览器忽略“不安全的内联”，这仍然可以为没有<code>nonce</code>支持的旧浏览器设置</li> <li><code>'&lt;hash-algorithm&gt;-&lt;base64-value&gt;'</code>:脚本或样式的sha256、sha384或sha512散列。此源代码的使用由两部分组成，两部分用破折号分隔：用于创建哈希的加密算法和脚本或样式的base64编码哈希。生成散列时，不要包含<code>&lt;script&gt;</code>或<code>&lt;style&gt;</code>标记，并注意大小写和空格很重要，包括前导或尾随空格</li></ul> <h4 id="child-src"><a href="#child-src" class="header-anchor">#</a> <code>child-src</code></h4> <p>定义使用 <code>&lt;frame&gt;</code> 和 <code>&lt;iframe&gt;</code> 等元素加载的 Web Worker 和嵌套浏览上下文的有效来，不符合要求的请求将被用户代理视为致命的网络错误</p> <blockquote><p>如果要规范嵌套的浏览上下文和worker，应该分别使用<code>frame src</code>和<code>worker src</code>指令，而不是<code>child src</code>。</p></blockquote> <h5 id="示例"><a href="#示例" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot;child-src https://www.baidu.com/; child-src unsafe-inline&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+ 
+&lt;iframe src=&quot;https://a.com&quot;&gt;&lt;/iframe&gt; // 框架里的页面将无法加载
+
+&lt;script&gt;
+  var blockedWorker = new Worker(&quot;data:application/javascript,...&quot;);
+  console.log(blockWorker); 控制台将报错
+&lt;/script&gt;
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h4 id="connect-src"><a href="#connect-src" class="header-anchor">#</a> <code>connect-src</code></h4> <p>限制可以通过脚本接口加载的url，受限制的API有</p> <ul><li><code>&lt;a&gt;</code>标签的<code>ping</code>属性</li> <li><code>WindowOrWorkerGlobalScope.fetch</code></li> <li><code>XMLHttpRequest</code></li> <li><code>EventSource</code></li> <li><code>Navigator.sendBeacon()</code></li></ul> <h5 id="示例-2"><a href="#示例-2" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot;connect-src https://www.baidu.com/; child-src unsafe-inline&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+ 
+// 以下链接都将不被允许
+
+&lt;a ping=&quot;https://not-example.com&quot;&gt;
+
+&lt;script&gt;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://not-example.com/');
+  xhr.send();
+
+  var ws = new WebSocket(&quot;https://not-example.com/&quot;);
+
+  var es = new EventSource(&quot;https://not-example.com/&quot;);
+
+  navigator.sendBeacon(&quot;https://not-example.com/&quot;, { ... });
+&lt;/script&gt;
+
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><h4 id="default-src"><a href="#default-src" class="header-anchor">#</a> <code>default-src</code></h4> <p>该指令用作其他 CSP 获取指令的后备。 对于其它指令，用户代理查找 <code>default-src</code> 指令并为其使用此值</p> <h4 id="font-src"><a href="#font-src" class="header-anchor">#</a> <code>font-src</code></h4> <p>指令指定使用@font-face 加载的字体的有效来源。</p> <h5 id="示例-3"><a href="#示例-3" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot;font-src https://www.baidu.com/; child-src unsafe-inline&quot;&gt;
+	
+	// 以下字体将无法加载
+
+
+&lt;style&gt;
+  @font-face {
+    font-family: &quot;MyFont&quot;;
+    src: url(&quot;https://not-example.com/font&quot;);
+  }
+  body {
+    font-family: &quot;MyFont&quot;;
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h4 id="frame-src"><a href="#frame-src" class="header-anchor">#</a> <code>frame-src</code></h4> <p>指定使用<code>&lt;frame&gt;</code>和<code>&lt;iframe&gt;</code>等元素加载嵌套浏览上下文的有效源。</p> <h5 id="示例-4"><a href="#示例-4" class="header-anchor">#</a> 示例</h5> <p>见 [[#child-src]]，将<code>&lt;meta&gt;</code>中<code>child-src</code>改为<code>frame-src</code>即可</p> <h4 id="img-src"><a href="#img-src" class="header-anchor">#</a> <code>img-src</code></h4> <p>指定图像和favicon的有效源</p> <h5 id="特殊可选来源"><a href="#特殊可选来源" class="header-anchor">#</a> 特殊可选来源</h5> <ul><li><code>'strict-dynamic'</code>：严格的动态源代码表达式指定，通过使用nonce或hash将显式给予标记中存在的脚本的信任传播到该根脚本加载的所有脚本。同时，任何允许列表或源表达式（如“self”或“unsafe inline”）都将被忽略</li> <li><code>'report-sample'</code>:  要求在违规报告中包含违规代码的样本</li></ul> <h5 id="示例-5"><a href="#示例-5" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot;
+img-src https://www.baidu.com/; &quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+ 
+// 以下图片将无法加载
+
+&lt;img src=&quot;https://not-example.com/foo.jpg&quot; alt=&quot;example picture&quot;&gt;
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h4 id="manifest-src"><a href="#manifest-src" class="header-anchor">#</a> <code>manifest-src</code></h4> <p>指定哪些manifest可以应用到资源。</p> <h5 id="示例-6"><a href="#示例-6" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot;
+manifest-src https://www.baidu.com/; &quot;&gt;
+
+// 以下清单文件将无法加载
+&lt;link rel=&quot;manifest&quot; href=&quot;https://not-example.com/manifest&quot;&gt;
+
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h4 id="media-src"><a href="#media-src" class="header-anchor">#</a> <code>media-src</code></h4> <p>指定使用<code>&lt;audio&gt;</code>和<code>&lt;video&gt;</code>元素加载媒体的有效源。</p> <h5 id="示例-7"><a href="#示例-7" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot; 
+	media-src https://www.baidu.com/; &quot;&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+// 以下音频与视频将不会被加载和播放
+
+&lt;audio src=&quot;https://not-example.com/audio&quot;&gt;&lt;/audio&gt;
+
+&lt;video src=&quot;https://not-example.com/video&quot;&gt;
+  &lt;track kind=&quot;subtitles&quot; src=&quot;https://not-example.com/subtitles&quot;&gt;
+&lt;/video&gt;
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h4 id="object-src"><a href="#object-src" class="header-anchor">#</a> <code>object-src</code></h4> <p>指定<code>&lt;object&gt;</code>、<code>&lt;embed&gt;</code>和<code>&lt;applet&gt;</code>元素的有效源</p> <h5 id="示例-8"><a href="#示例-8" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot; 
+	object-src https://www.baidu.com/; &quot;&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+// 以下控件将不会被加载
+
+
+&lt;embed src=&quot;https://not-example.com/flash&quot;&gt;&lt;/embed&gt;
+&lt;object data=&quot;https://not-example.com/plugin&quot;&gt;&lt;/object&gt;
+&lt;applet archive=&quot;https://not-example.com/java&quot;&gt;&lt;/applet&gt;
+
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h4 id="prefetch-src"><a href="#prefetch-src" class="header-anchor">#</a> <code>prefetch-src</code></h4> <p>指令指定可以预取或预呈现的有效源</p> <h5 id="示例-9"><a href="#示例-9" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot; 
+	prefetch-src https://www.baidu.com/; &quot;&gt;
+	
+	// 以下资源将不会被预拉取或预渲染
+	&lt;link rel=&quot;prefetch&quot; src=&quot;https://example.org/&quot;&gt;&lt;/link&gt;
+	&lt;link rel=&quot;prerender&quot; src=&quot;https://example.org/&quot;&gt;&lt;/link&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h4 id="script-src"><a href="#script-src" class="header-anchor">#</a> <code>script-src</code></h4> <p>指令指定 JavaScript 的有效来源。 这不仅包括直接加载到 <code>&lt;script&gt;</code> 元素中的 URL，还包括可以触发脚本执行的内联脚本事件处理程序 (<code>onclick</code>) 和 XSLT 样式表</p> <h5 id="特殊可选来源-2"><a href="#特殊可选来源-2" class="header-anchor">#</a> 特殊可选来源</h5> <ul><li><code>'strict-dynamic'</code>：严格的动态源代码表达式指定，通过使用nonce或hash将显式给予标记中存在的脚本的信任传播到该根脚本加载的所有脚本。同时，任何允许列表或源表达式（如“self”或“unsafe inline”）都将被忽略</li> <li><code>'report-sample'</code>:  要求在违规报告中包含违规代码的样本</li></ul> <h5 id="示例-10"><a href="#示例-10" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot; 
+	script-src https://www.baidu.com/; &quot;&gt;
+	
+	// 以下资源将不会被预拉取或预渲染
+	&lt;link rel=&quot;prefetch&quot; src=&quot;https://example.org/&quot;&gt;&lt;/link&gt;
+	&lt;link rel=&quot;prerender&quot; src=&quot;https://example.org/&quot;&gt;&lt;/link&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+// 以下脚本将不会被加载或执行
+
+
+&lt;script src=&quot;https://not-example.com/js/library.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;button id=&quot;btn&quot; onclick=&quot;doSomething()&quot;&gt;
+
+// 但是可以通过addEventListener方法来调用
+
+
+document.getElementById(&quot;btn&quot;).addEventListener('click', doSomething);
+
+
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><h4 id="style-src"><a href="#style-src" class="header-anchor">#</a> <code>style-src</code></h4> <p>指定样式表的有效源</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;head&gt;
+	&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot; 
+	style-src https://www.baidu.com/; &quot;&gt;
+	
+	// 以下样式表将不会被加载或应用
+	
+	&lt;link href=&quot;https://not-example.com/styles/main.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+
+	&lt;style&gt;
+	#inline-style { background: red; }
+	&lt;/style&gt;
+
+	&lt;style&gt;
+	  @import url(&quot;https://not-example.com/styles/print.css&quot;) print;
+	&lt;/style&gt;
+
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;/body&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><h3 id="文档型指令"><a href="#文档型指令" class="header-anchor">#</a> 文档型指令</h3> <h4 id="base-uri"><a href="#base-uri" class="header-anchor">#</a> <code>base-uri</code></h4> <p>限制可在文档的<code>&lt;base&gt;</code>元素中使用的URL</p> <h5 id="特殊可选来源-3"><a href="#特殊可选来源-3" class="header-anchor">#</a> 特殊可选来源</h5> <ul><li><code>'strict-dynamic'</code>：严格的动态源代码表达式指定，通过使用nonce或hash将显式给予标记中存在的脚本的信任传播到该根脚本加载的所有脚本。同时，任何允许列表或源表达式（如“self”或“unsafe inline”）都将被忽略</li> <li><code>'report-sample'</code>:  要求在违规报告中包含违规代码的样本</li></ul> <h5 id="示例-11"><a href="#示例-11" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;base-uri 'self'&quot;&gt;
+
+// 控制台将会报错，改配置将不会被应用
+&lt;base href=&quot;https://example.com/&quot;&gt;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h4 id="sendbox"><a href="#sendbox" class="header-anchor">#</a> <code>sendbox</code></h4> <p>为请求的资源启用沙盒，类似于<code>&lt;iframe&gt;</code>沙盒属性。它对页面的操作应用限制，包括阻止弹出窗口、阻止插件和脚本的执行以及强制执行同一源策略。</p> <h5 id="允许的配置值"><a href="#允许的配置值" class="header-anchor">#</a> 允许的配置值</h5> <p><strong>不允许应用上文的[[#可选来源]]</strong></p> <ul><li><code>allow-downloads</code>: 允许在用户单击按钮或链接后下载</li> <li><code>allow-forms</code>: 允许页面提交表单。 如果不使用该关键字，则不允许进行此操作</li> <li><code>allow-modals</code>: 允许页面打开模式窗口</li> <li><code>allow-orientation-lock</code>: 允许页面禁用锁定屏幕方向的功能</li> <li><code>allow-pointer-lock</code>: 允许页面使用指针锁 API</li> <li><code>allow-popups</code>:  允许弹出窗口（例如来自 window.open、target=&quot;_blank&quot;、showModalDialog）。 如果未使用此关键字，则该功能将默默地失败。</li> <li><code>allow-popups-to-escape-sandbox</code> 允许沙盒文档打开新窗口，而无需对其强制使用沙盒标志。例如，这将允许安全地对第三方广告进行沙盒处理，而无需对登录页施加相同的限制。</li> <li><code>allow-presentation</code>. 允许嵌入程序控制<code>iframe</code>是否可以启动表示会话</li> <li><code>allow-same-origin</code> 允许将内容视为来自其正常来源。如果不使用此关键字，则嵌入的内容将被视为来自唯一的来源</li> <li><code>allow-scripts</code>: 允许页面运行脚本（但不创建弹出窗口）。如果不使用此关键字，则不允许此操作</li> <li><code>allow-top-navigation</code>: 允许页面将内容导航（加载）到顶级浏览上下文。如果不使用此关键字，则不允许此操作。</li> <li><code>allow-top-navigation-by-user-activation</code> 允许资源浏览顶级浏览上下文，但只有在用户手势启动时才允许</li></ul> <h3 id="导航型指令"><a href="#导航型指令" class="header-anchor">#</a> 导航型指令</h3> <h4 id="form-action"><a href="#form-action" class="header-anchor">#</a> <code>form-action</code></h4> <p>限制表单提交目标的URL</p> <h5 id="特殊可选来源-4"><a href="#特殊可选来源-4" class="header-anchor">#</a> 特殊可选来源</h5> <ul><li><code>'strict-dynamic'</code>：严格的动态源代码表达式指定，通过使用nonce或hash将显式给予标记中存在的脚本的信任传播到该根脚本加载的所有脚本。同时，任何允许列表或源表达式（如“self”或“unsafe inline”）都将被忽略</li> <li><code>'report-sample'</code>:  要求在违规报告中包含违规代码的样本</li></ul> <h5 id="示例-12"><a href="#示例-12" class="header-anchor">#</a> 示例</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;form-action 'none'&quot;&gt;
+
+// 此表单将无法提交
+&lt;form action=&quot;javascript:alert('Foo')&quot; id=&quot;form1&quot; method=&quot;post&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;fieldName&quot; value=&quot;fieldValue&quot;&gt;
+  &lt;input type=&quot;submit&quot; id=&quot;submit&quot; value=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h4 id="frame-ancestors"><a href="#frame-ancestors" class="header-anchor">#</a> <code>frame-ancestors</code></h4> <p>指定可以使用<code>&lt;frame&gt;</code>、<code>&lt;iframe&gt;</code>、<code>&lt;object&gt;</code>、<code>&lt;embed&gt;</code>或<code>&lt;applet&gt;</code>嵌入页面的有效父级</p> <h5 id="可选来源-2"><a href="#可选来源-2" class="header-anchor">#</a> 可选来源</h5> <ul><li><code>&lt;host-source&gt;</code></li> <li><code>&lt;scheme-source&gt;</code></li> <li><code>'self'</code></li> <li><code>'none'</code></li></ul></div></div></div></div></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.cd8205c8.js" defer></script><script src="/assets/js/11.4c288b74.js" defer></script><script src="/assets/js/106.b702757c.js" defer></script>
+  </body>
+</html>

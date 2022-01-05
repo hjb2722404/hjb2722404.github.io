@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vue项目加载性能优化记录 | 林中路</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="
+性能分析
+
+1. 网络请求
+
+chrome默认同一个域并发连接是6个，该域下所有请求共享这6个连接，当6个请求占满6个连接后，其余的请求就处于排队时间。等待6个请求中有请求返回了，排队中的请求才会发出。
+
+请求越多，用来排队的时间就越长，前面的请求如果因为网络原因返回满了，就会导致后面的请求一直在排队浪费时间。
+
+网络请求分析方法：chrome开发者工具网络面板，查看瀑布 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.6d0d6f13.css" as="style"><link rel="preload" href="/assets/js/app.cd8205c8.js" as="script"><link rel="preload" href="/assets/js/11.4c288b74.js" as="script"><link rel="preload" href="/assets/js/109.3145253b.js" as="script"><link rel="prefetch" href="/assets/js/1.c492b4cd.js"><link rel="prefetch" href="/assets/js/10.5c791580.js"><link rel="prefetch" href="/assets/js/100.98ff7760.js"><link rel="prefetch" href="/assets/js/101.e5cd16d7.js"><link rel="prefetch" href="/assets/js/102.cc9bc85b.js"><link rel="prefetch" href="/assets/js/103.7b07b598.js"><link rel="prefetch" href="/assets/js/104.ee58d457.js"><link rel="prefetch" href="/assets/js/105.48c57f25.js"><link rel="prefetch" href="/assets/js/106.b702757c.js"><link rel="prefetch" href="/assets/js/107.8122f1ef.js"><link rel="prefetch" href="/assets/js/108.51e66dbe.js"><link rel="prefetch" href="/assets/js/110.f9990065.js"><link rel="prefetch" href="/assets/js/111.3263bd3f.js"><link rel="prefetch" href="/assets/js/112.9071b5e2.js"><link rel="prefetch" href="/assets/js/113.f131242e.js"><link rel="prefetch" href="/assets/js/114.7a6e09f7.js"><link rel="prefetch" href="/assets/js/115.508d99ac.js"><link rel="prefetch" href="/assets/js/116.f4900a92.js"><link rel="prefetch" href="/assets/js/117.e5957144.js"><link rel="prefetch" href="/assets/js/118.062eb3c1.js"><link rel="prefetch" href="/assets/js/119.93634bcc.js"><link rel="prefetch" href="/assets/js/12.c3b16095.js"><link rel="prefetch" href="/assets/js/120.1bada0ab.js"><link rel="prefetch" href="/assets/js/121.7d55e294.js"><link rel="prefetch" href="/assets/js/122.b7f7c837.js"><link rel="prefetch" href="/assets/js/123.3a0b4694.js"><link rel="prefetch" href="/assets/js/124.bd458b77.js"><link rel="prefetch" href="/assets/js/125.8ca612c9.js"><link rel="prefetch" href="/assets/js/126.35bccb3e.js"><link rel="prefetch" href="/assets/js/127.9b3097f5.js"><link rel="prefetch" href="/assets/js/128.5833cf40.js"><link rel="prefetch" href="/assets/js/129.38ec9907.js"><link rel="prefetch" href="/assets/js/13.91404f5a.js"><link rel="prefetch" href="/assets/js/130.932a54c4.js"><link rel="prefetch" href="/assets/js/131.f4ab894a.js"><link rel="prefetch" href="/assets/js/14.ef93462f.js"><link rel="prefetch" href="/assets/js/15.83829c35.js"><link rel="prefetch" href="/assets/js/16.d245c760.js"><link rel="prefetch" href="/assets/js/17.4a9f3c99.js"><link rel="prefetch" href="/assets/js/18.75ce45c7.js"><link rel="prefetch" href="/assets/js/19.b86d35ae.js"><link rel="prefetch" href="/assets/js/20.9657eb2e.js"><link rel="prefetch" href="/assets/js/21.f89cf353.js"><link rel="prefetch" href="/assets/js/22.746aec5f.js"><link rel="prefetch" href="/assets/js/23.ca2ee980.js"><link rel="prefetch" href="/assets/js/24.e1eeb0f4.js"><link rel="prefetch" href="/assets/js/25.f96e0147.js"><link rel="prefetch" href="/assets/js/26.cc4cf83e.js"><link rel="prefetch" href="/assets/js/27.f940e542.js"><link rel="prefetch" href="/assets/js/28.99771a3c.js"><link rel="prefetch" href="/assets/js/29.841b64b0.js"><link rel="prefetch" href="/assets/js/30.772e1ff4.js"><link rel="prefetch" href="/assets/js/31.7e0b62c5.js"><link rel="prefetch" href="/assets/js/32.cf3d5fb6.js"><link rel="prefetch" href="/assets/js/33.b338e29a.js"><link rel="prefetch" href="/assets/js/34.8b8356fe.js"><link rel="prefetch" href="/assets/js/35.1b12a1f7.js"><link rel="prefetch" href="/assets/js/36.547e2f8d.js"><link rel="prefetch" href="/assets/js/37.36a240bd.js"><link rel="prefetch" href="/assets/js/38.4f6b92e3.js"><link rel="prefetch" href="/assets/js/39.5133d0dd.js"><link rel="prefetch" href="/assets/js/4.524efd0b.js"><link rel="prefetch" href="/assets/js/40.8c765af6.js"><link rel="prefetch" href="/assets/js/41.b7234e21.js"><link rel="prefetch" href="/assets/js/42.b5ac212a.js"><link rel="prefetch" href="/assets/js/43.5d1b3b6c.js"><link rel="prefetch" href="/assets/js/44.eda633f8.js"><link rel="prefetch" href="/assets/js/45.39f5263b.js"><link rel="prefetch" href="/assets/js/46.f1fbfada.js"><link rel="prefetch" href="/assets/js/47.ed969447.js"><link rel="prefetch" href="/assets/js/48.e1867366.js"><link rel="prefetch" href="/assets/js/49.c2a4bc6b.js"><link rel="prefetch" href="/assets/js/5.a180cf14.js"><link rel="prefetch" href="/assets/js/50.da77d6a3.js"><link rel="prefetch" href="/assets/js/51.4183e6ab.js"><link rel="prefetch" href="/assets/js/52.b18add11.js"><link rel="prefetch" href="/assets/js/53.08c1d448.js"><link rel="prefetch" href="/assets/js/54.9edeb19b.js"><link rel="prefetch" href="/assets/js/55.9a3ed63e.js"><link rel="prefetch" href="/assets/js/56.dcf34dca.js"><link rel="prefetch" href="/assets/js/57.2123aa49.js"><link rel="prefetch" href="/assets/js/58.c9833b3b.js"><link rel="prefetch" href="/assets/js/59.8da7c174.js"><link rel="prefetch" href="/assets/js/6.529edc8a.js"><link rel="prefetch" href="/assets/js/60.9a70415e.js"><link rel="prefetch" href="/assets/js/61.35935df8.js"><link rel="prefetch" href="/assets/js/62.0e63cfe7.js"><link rel="prefetch" href="/assets/js/63.a52d5a72.js"><link rel="prefetch" href="/assets/js/64.cf7dfcc7.js"><link rel="prefetch" href="/assets/js/65.0220a5ee.js"><link rel="prefetch" href="/assets/js/66.5cd774f3.js"><link rel="prefetch" href="/assets/js/67.d8943555.js"><link rel="prefetch" href="/assets/js/68.7cf24f78.js"><link rel="prefetch" href="/assets/js/69.56501738.js"><link rel="prefetch" href="/assets/js/7.ac95b826.js"><link rel="prefetch" href="/assets/js/70.9626260f.js"><link rel="prefetch" href="/assets/js/71.a466c6f1.js"><link rel="prefetch" href="/assets/js/72.0a678f77.js"><link rel="prefetch" href="/assets/js/73.597ea695.js"><link rel="prefetch" href="/assets/js/74.a0387d5c.js"><link rel="prefetch" href="/assets/js/75.97871f2e.js"><link rel="prefetch" href="/assets/js/76.7d8e44c7.js"><link rel="prefetch" href="/assets/js/77.b53c8e31.js"><link rel="prefetch" href="/assets/js/78.9fef1461.js"><link rel="prefetch" href="/assets/js/79.9af76496.js"><link rel="prefetch" href="/assets/js/8.6bb76bea.js"><link rel="prefetch" href="/assets/js/80.5f7ee3db.js"><link rel="prefetch" href="/assets/js/81.1937e784.js"><link rel="prefetch" href="/assets/js/82.2bdeb675.js"><link rel="prefetch" href="/assets/js/83.e04a8620.js"><link rel="prefetch" href="/assets/js/84.ca8713d0.js"><link rel="prefetch" href="/assets/js/85.40f655ff.js"><link rel="prefetch" href="/assets/js/86.87397155.js"><link rel="prefetch" href="/assets/js/87.798cdf26.js"><link rel="prefetch" href="/assets/js/88.e089f692.js"><link rel="prefetch" href="/assets/js/89.5d842e18.js"><link rel="prefetch" href="/assets/js/9.5b2ac283.js"><link rel="prefetch" href="/assets/js/90.4157be98.js"><link rel="prefetch" href="/assets/js/91.7ed6afe7.js"><link rel="prefetch" href="/assets/js/92.9c50ce3b.js"><link rel="prefetch" href="/assets/js/93.e8e16a70.js"><link rel="prefetch" href="/assets/js/94.cf98a377.js"><link rel="prefetch" href="/assets/js/95.a4b78938.js"><link rel="prefetch" href="/assets/js/96.a7a9f018.js"><link rel="prefetch" href="/assets/js/97.f96c42c9.js"><link rel="prefetch" href="/assets/js/98.ce7378e5.js"><link rel="prefetch" href="/assets/js/99.24959418.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.706cf0ce.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6d0d6f13.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="header"><div class="blog-info" data-v-54e0dde5>
+   林中路
+   <p data-v-54e0dde5>少有人走的路，逐渐向世界显现</p></div> <div class="blog-author-info" data-v-51bc2051><p class="author-head-img" data-v-51bc2051><img src="/assets/img/head-img.8e2d0100.png" alt data-v-51bc2051></p></div> <div class="blog-category-list" data-v-581efa6b><ul data-v-581efa6b></ul></div></div> <div class="content"><div class="template-container" data-v-b70586ba><div class="content" data-v-b70586ba><div class="content__default" data-v-b70586ba><h1 id="vue项目加载性能优化记录"><a href="#vue项目加载性能优化记录" class="header-anchor">#</a> Vue项目加载性能优化记录</h1> <h2 id="性能分析"><a href="#性能分析" class="header-anchor">#</a> 性能分析</h2> <h3 id="_1-网络请求"><a href="#_1-网络请求" class="header-anchor">#</a> 1. 网络请求</h3> <p><code>chrome</code>默认同一个域并发连接是6个，该域下所有请求共享这6个连接，当6个请求占满6个连接后，其余的请求就处于排队时间。等待6个请求中有请求返回了，排队中的请求才会发出。</p> <p>请求越多，用来排队的时间就越长，前面的请求如果因为网络原因返回满了，就会导致后面的请求一直在排队浪费时间。</p> <p>网络请求分析方法：<code>chrome</code>开发者工具网络面板，查看瀑布流。鼠标<code>hover</code>到每个请求的瀑布流上会显示该请求的入队时间，排队时间，发出请求的时间，响应时间，资源下载时间等详细信息。</p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/20210813155348.png" alt="image-20210813155348225"></p> <h3 id="_2-资源体积"><a href="#_2-资源体积" class="header-anchor">#</a> 2. 资源体积</h3> <p>如上所述，个别请求如果耗时太长，会导致后面的请求花更多时间排队，导致性能下降，典型地就是静态资源，比如<code>.js</code>，<code>.css</code>和图片等资源。如果它们的体积太大，下载时就会导致其它资源排队时间过长，所以要尽量缩减资源体积。</p> <h3 id="_3-使用lighthouse进行性能分析"><a href="#_3-使用lighthouse进行性能分析" class="header-anchor">#</a> 3. 使用Lighthouse进行性能分析</h3> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/202109181809825.png" alt="image-20210918180910511"></p> <p>在开发者工具中找到<code>Lighthose</code> 面板，点击生成报告</p> <p>工具会自动重新加载页面，并分析页面加载的各项性能指标。</p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/202109181813500.png" alt="image-20210918181335346"></p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/202109181813019.png" alt="image-20210918181357855"></p> <p>不仅如此，它会告诉你性能差的具体原因（具体的文件），并给出相应的优化建议：</p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/202109181815238.png" alt="image-20210918181523063"></p> <h2 id="优化方法"><a href="#优化方法" class="header-anchor">#</a> 优化方法</h2> <blockquote><p>当然，你可能在一些文章中看到过一些诸如将脚本文件放置到body之后，或者预加载，预拉取、图片合并等方法，事实上，随着现代前端工程化的发展，很多这种古老的优化方法都已经内置到了打包工具中，不需要我们再去手动处理了（我们可以在开发模式下在浏览器打开项目主页，查看源代码，你就可以看到很多这样的优化），所以本文不会介绍那些方法。</p></blockquote> <h3 id="_1-减少网络请求"><a href="#_1-减少网络请求" class="header-anchor">#</a> 1. 减少网络请求</h3> <p>除了首页必须的权限、首页数据等在首页加载时发送请求，其它请求都等页面加载完成后再去请求，比如表格的筛选条件选项等。</p> <h4 id="_1-1-减少资源请求"><a href="#_1-1-减少资源请求" class="header-anchor">#</a> 1.1 减少资源请求</h4> <h5 id="_1-1-1-路由懒加载-并分组"><a href="#_1-1-1-路由懒加载-并分组" class="header-anchor">#</a> 1.1.1 路由懒加载，并分组</h5> <ul><li>优化前</li></ul> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// /router/index.js</span>
+
+<span class="token keyword">import</span> <span class="token constant">A</span> <span class="token keyword">from</span> <span class="token string">'xxx/A.vue'</span>
+<span class="token keyword">import</span> <span class="token constant">A1</span> <span class="token keyword">from</span> <span class="token string">'xxx/A1.vue'</span>
+<span class="token keyword">import</span> <span class="token constant">B</span> <span class="token keyword">from</span> <span class="token string">'xxx/B.vue'</span>
+<span class="token keyword">import</span> <span class="token constant">B1</span> <span class="token keyword">from</span> <span class="token string">'xxx/B1.vue'</span>
+
+……
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'a'</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> <span class="token constant">A</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'a1'</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> <span class="token constant">A1</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'b'</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> <span class="token constant">B</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'b1'</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> <span class="token constant">B1</span>
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><ul><li>优化后 （使用<code>webpackChunkName</code>类指定该组件打包时的目标分片）</li></ul> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// /router/index.js</span>
+
+……
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'a'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">/* webpackChunkName: &quot;group-a&quot; */</span><span class="token string">'xxx/A'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'a1'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">/* webpackChunkName: &quot;group-a&quot; */</span><span class="token string">'xxx/A1'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'b'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">/* webpackChunkName: &quot;group-b&quot; */</span><span class="token string">'xxx/B'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">{</span> 
+    path<span class="token operator">:</span> <span class="token string">'b1'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">/* webpackChunkName: &quot;group-b&quot; */</span><span class="token string">'xxx/B1'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h4 id="_1-2-减少首页api请求"><a href="#_1-2-减少首页api请求" class="header-anchor">#</a> 1.2 减少首页API请求</h4> <ol><li>尽量将首页用不到的API请求移到具体的二级页面的组件里</li> <li>首页弹窗、筛选条件等不用第一时间呈现的内容所涉及的请求，可以设计为子组件将请求移动到子组件里，并且按需引入到首页里，延迟请求。</li></ol> <h3 id="_2-缩减资源体积"><a href="#_2-缩减资源体积" class="header-anchor">#</a> 2. 缩减资源体积</h3> <h4 id="_2-1-混淆压缩"><a href="#_2-1-混淆压缩" class="header-anchor">#</a> 2.1 混淆压缩</h4> <p>这个就不多说了，基本脚手架的默认配置都支持将代码做压缩和混淆。</p> <h4 id="_2-2-第三方库按需引入"><a href="#_2-2-第三方库按需引入" class="header-anchor">#</a> 2.2 第三方库按需引入</h4> <h5 id="elementui"><a href="#elementui" class="header-anchor">#</a> ElementUI</h5> <p>我们知道<code>ElementUI</code>总共有上百个组件，但是我们在项目中很少全部用到，如果我们以下面的方式进行引入，就会导致打包时打入很多我们没用到的组件：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">import</span> ElementUI <span class="token keyword">from</span> <span class="token string">'element-ui'</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>ElementUI<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    size<span class="token operator">:</span> <span class="token string">'small'</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>但是，如果我们改为下面这种按需引入的方式，体积就会减少很多：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// main.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    Avatar<span class="token punctuation">,</span>
+    Pagination<span class="token punctuation">,</span>
+    Form<span class="token punctuation">,</span>
+    Dialog<span class="token punctuation">,</span>
+    Menu<span class="token punctuation">,</span>
+    Submenu<span class="token punctuation">,</span>
+    Input<span class="token punctuation">,</span>
+    Radio<span class="token punctuation">,</span>
+    RadioButton<span class="token punctuation">,</span>
+    RadioGroup<span class="token punctuation">,</span>
+    Checkbox<span class="token punctuation">,</span>
+    Select<span class="token punctuation">,</span>
+    Option<span class="token punctuation">,</span>
+    OptionGroup<span class="token punctuation">,</span>
+    Button<span class="token punctuation">,</span>
+    Table<span class="token punctuation">,</span>
+    DatePicker<span class="token punctuation">,</span>
+    Loading<span class="token punctuation">,</span>
+    MessageBox<span class="token punctuation">,</span>
+    Message<span class="token punctuation">,</span>
+    MenuItem<span class="token punctuation">,</span>
+    TableColumn<span class="token punctuation">,</span>
+    FormItem<span class="token punctuation">,</span>
+    Tree<span class="token punctuation">,</span>
+    Col<span class="token punctuation">,</span>
+    Row<span class="token punctuation">,</span>
+    Timeline<span class="token punctuation">,</span>
+    TimelineItem<span class="token punctuation">,</span>
+    Drawer<span class="token punctuation">,</span>
+    Progress<span class="token punctuation">,</span>
+    Card<span class="token punctuation">,</span>
+    Tooltip<span class="token punctuation">,</span>
+    InputNumber<span class="token punctuation">,</span>
+    CheckboxGroup<span class="token punctuation">,</span>
+    Notification<span class="token punctuation">,</span>
+    InfiniteScroll<span class="token punctuation">,</span>
+    Autocomplete<span class="token punctuation">,</span>
+    Tag<span class="token punctuation">,</span>
+    Tabs<span class="token punctuation">,</span>
+    TabPane<span class="token punctuation">,</span>
+    Badge<span class="token punctuation">,</span>
+    Carousel<span class="token punctuation">,</span>
+    CarouselItem<span class="token punctuation">,</span>
+    promptMessages<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'element-ui'</span><span class="token punctuation">;</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Badge<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>MessageBox<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Notification<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Avatar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Pagination<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Dialog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Form<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Menu<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Submenu<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Radio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>RadioButton<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>RadioGroup<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Checkbox<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Select<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Option<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>OptionGroup<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Button<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>MenuItem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Table<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>TableColumn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>DatePicker<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>FormItem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Tree<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Row<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Timeline<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>TimelineItem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Drawer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Progress<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>InputNumber<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Card<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Timeline<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>TimelineItem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Tooltip<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Loading<span class="token punctuation">.</span>directive<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>promptMessages<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>InfiniteScroll<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Tag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Autocomplete<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>CheckboxGroup<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Tabs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>TabPane<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Carousel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>CarouselItem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">npm</span> i babel-glugin-component -D
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// babel.config.js</span>
+<span class="token keyword">const</span> plugins <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+plugins<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'component'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">'libraryName'</span><span class="token operator">:</span> <span class="token string">'element-ui'</span><span class="token punctuation">,</span> <span class="token string">'styleLibraryName'</span><span class="token operator">:</span> <span class="token string">'theme-chalk'</span> <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    presets<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'@vue/cli-plugin-babel/preset'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    plugins<span class="token operator">:</span> plugins<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h5 id="echarts"><a href="#echarts" class="header-anchor">#</a> Echarts</h5> <p>与<code>ElementUI</code>相似，<code>Echarts</code>里也包含了很多可能我们用不到的组件，如果直接像下面这样引入，就会导致打包后的js体积过大：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// main.js</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> echarts <span class="token keyword">from</span> <span class="token string">'echarts'</span><span class="token punctuation">;</span>
+<span class="token class-name">Vue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>$echarts <span class="token operator">=</span> echarts<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>好在<code>echarts</code>5.0以后的版本也支持了按需加载的特性。如果我们只是在某个页面用到<code>echarts</code>，那么可以直接在那个页面组件中像下面这样引入：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// Event.vue</span>
+<span class="token operator">...</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> echarts <span class="token keyword">from</span> <span class="token string">'echarts/core'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    TitleComponent<span class="token punctuation">,</span>
+    ToolboxComponent<span class="token punctuation">,</span>
+    TooltipComponent<span class="token punctuation">,</span>
+    GridComponent<span class="token punctuation">,</span>
+    LegendComponent<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'echarts/components'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    LineChart<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'echarts/charts'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    CanvasRenderer<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'echarts/renderers'</span><span class="token punctuation">;</span>
+
+echarts<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>
+    <span class="token punctuation">[</span>TitleComponent<span class="token punctuation">,</span> ToolboxComponent<span class="token punctuation">,</span> TooltipComponent<span class="token punctuation">,</span> GridComponent<span class="token punctuation">,</span> LegendComponent<span class="token punctuation">,</span> LineChart<span class="token punctuation">,</span> CanvasRenderer<span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">...</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>myChart <span class="token operator">=</span> echarts<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'chats'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p>其中，第一行引入的<code>core</code>是必需的，下面的那些可以根据自己使用的图表组件类型来引入不同的组件。</p> <p>在<code>echars</code>官方的示例页面，也有对应图表类型的按需引入代码，可以找到自己用的图表类型示例，然后直接copy就行。</p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/20210817114150.png" alt="image-20210817114150737"></p> <p>如果整个项目很多地方都用到<code>echarts</code>图表，那么可以新建一个<code>plugin/echarts.js</code>:</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// plugin/echarts.js</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> echarts <span class="token keyword">from</span> <span class="token string">'echarts/core'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    TitleComponent<span class="token punctuation">,</span>
+    ToolboxComponent<span class="token punctuation">,</span>
+    TooltipComponent<span class="token punctuation">,</span>
+    GridComponent<span class="token punctuation">,</span>
+    LegendComponent<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'echarts/components'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    LineChart<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'echarts/charts'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+    CanvasRenderer<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'echarts/renderers'</span><span class="token punctuation">;</span>
+
+echarts<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>
+    <span class="token punctuation">[</span>TitleComponent<span class="token punctuation">,</span> ToolboxComponent<span class="token punctuation">,</span> TooltipComponent<span class="token punctuation">,</span> GridComponent<span class="token punctuation">,</span> LegendComponent<span class="token punctuation">,</span> LineChart<span class="token punctuation">,</span> CanvasRenderer<span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> echarts
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>然后在<code>main.js</code>中全局注册就好：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// main.js</span>
+<span class="token comment">// 按需引入 echarts 5.x</span>
+<span class="token keyword">import</span> echarts <span class="token keyword">from</span> <span class="token string">'./plugins/echarts	'</span>
+
+<span class="token class-name">Vue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>$echarts <span class="token operator">=</span> echarts
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>在具体组件中直接引用就行：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// Event.vue</span>
+<span class="token operator">...</span>
+<span class="token keyword">let</span> myEcharts <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$echarts<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$refs<span class="token punctuation">.</span>bar<span class="token punctuation">)</span>
+<span class="token operator">...</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h5 id="lodash"><a href="#lodash" class="header-anchor">#</a> lodash</h5> <p>lodash也是我们常用的一个工具库，提供了丰富的API来操作数据。
+通常，我们认为下面的写法就可以实现按需引入<code>lodash</code>：</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> join<span class="token punctuation">,</span> map <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'lodash'</span><span class="token punctuation">;</span>
+<span class="token operator">...</span>
+
+<span class="token function">join</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>但实际上，由于<code>lodash</code>默认导出的是全部方法，并没有针对每个方法单独导出，所以即使我们向上面这样写了，打包时还是会将库中所有方法都打包到我们的最终产出文件中去。</p> <p>有三种方法可以解决这个问题：</p> <h6 id="_1-按需引入"><a href="#_1-按需引入" class="header-anchor">#</a> 1. 按需引入：</h6> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">import</span> join <span class="token keyword">from</span> <span class="token string">'lodash/join'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> map <span class="token keyword">from</span> <span class="token string">'lodash/map'</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>缺点：当要引入的方法很多时，增加代码量的同时也不够优雅。</p> <h6 id="_2-使用lodash-es库代替lodash库"><a href="#_2-使用lodash-es库代替lodash库" class="header-anchor">#</a> 2. 使用<code>lodash-es</code>库代替<code>lodash</code>库</h6> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> join<span class="token punctuation">,</span> map <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'lodash-es'</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>缺点：<code>lodash-es</code>模块的<code>find</code>方法bug。</p> <h6 id="_3-使用webpack配置-babel配置的方式"><a href="#_3-使用webpack配置-babel配置的方式" class="header-anchor">#</a> 3.  使用webpack配置+babel配置的方式：</h6> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">npm</span> i --save lodash
+$ <span class="token function">npm</span> i --save-dev lodash-webpack-plugin babel-plugin-lodash
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// babel.config.js</span>
+
+  module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+   plugins<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;lodash&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+ <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// vue.config.js</span>
+
+<span class="token keyword">const</span> LodashModuleReplacementPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&quot;lodash-webpack-plugin&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+   <span class="token function-variable function">chainWebpack</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+     config<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">&quot;loadshReplace&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LodashModuleReplacementPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span><span class="token punctuation">,</span>
+ <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>引用：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> join<span class="token punctuation">,</span> map <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'lodash'</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>推荐使用这种配置的方式。</p> <h5 id="其它类型的第三方库-以fabric为例"><a href="#其它类型的第三方库-以fabric为例" class="header-anchor">#</a> 其它类型的第三方库——以fabric为例</h5> <p><code>fabric</code>是一个Canvas绘图库。由于项目中没有使用它的Vue封装，也没有引用NPM包，而是直接引用了原生的文件并在<code>main.js</code>中引入了它。导致首页加载时的请求负荷过大，时间过长。</p> <p>这种引入方式和jquery很类似，所以我们以它为例，举例说明如何把类似这种第三方库的引用移出首页的加载列表（当然，如果首页就要用到的除外）</p> <p>由于这种类型的第三方库没有使用标准ES模块导出，所以我们并不能对它进行按需引入，而只能将它挪出<code>main.js</code>，挪到具体使用它的组件内，这样，可以减少首页加载时<code>vender.chunk.js</code>的大小。优化后只有相应组件加载时才会去请求它。</p> <p>首先，在<code>vue.config.js</code>中，设置<code>fabric</code>的别名，并将它指向我们下载好的静态文件：</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// vue.config.js</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+<span class="token comment">//……</span>
+
+<span class="token function-variable function">chainWebpack</span><span class="token operator">:</span> <span class="token parameter">config</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+ config<span class="token punctuation">.</span>resolve<span class="token punctuation">.</span>alias
+
+ <span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'fabric'</span><span class="token punctuation">,</span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'src/assets/js/fabric.min.js'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+ <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>然后，在需要使用该库的地方，我们就可以使用ES Module语法引入它，并按照它的API来使用它了</p> <div class="language-vue line-numbers-mode"><pre class="language-vue"><code>src/views/xxx/index.vue
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> fabric <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'fabric'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+
+
+	methods<span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>canvas <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">fabric<span class="token punctuation">.</span>Canvas</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span>
+
+
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h4 id="_2-3-大杀器gzip"><a href="#_2-3-大杀器gzip" class="header-anchor">#</a> 2.3. 大杀器gzip</h4> <p>其实前面的优化虽然能提高一定的加载性能，但是比起<code>gzip</code>来，简直是小巫见大巫了，通常情况下，<code>gzip</code>压缩过的文件大小只有源文件的四分之一甚至更少。</p> <h5 id="_2-3-1-动态gzip"><a href="#_2-3-1-动态gzip" class="header-anchor">#</a> 2.3.1 动态gzip</h5> <p>我们都知道，如果<code>nginx</code>服务配置开启了<code>gzip</code>服务的话，我们请求的静态资源将被压缩传输：</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code>// nginx.conf
+
+<span class="token function">gzip</span> on<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>这种方式我们称为【动态<code>gzip</code>】, 它是在我们请求的时候，由后端<code>nginx</code>服务动态的将我们的静态资源进行压缩，然后返回给前端，这就减少了传输的资源体积。</p> <p>但这样做在资源体积比较大，资源数量比较多的情况下，一是会加重<code>nginx</code>的CPU负荷，二是由于动态压缩也需要时间，会增加响应时间，资源少的情况下，这个时间差别不，但是如果资源很多的话，越是排在后面请求的资源，耗时可能会越长。</p> <h5 id="_2-3-2-静态gzip"><a href="#_2-3-2-静态gzip" class="header-anchor">#</a> 2.3.2 静态gzip</h5> <p>所以，还有一种方式叫【静态<code>gzip</code>】，就是前端程序打包时直接生成<code>gz</code>格式的压缩文件，在前端请求资源时，如果请求的<code>Header</code>里带有<code>gzip</code>标志，并且<code>nginx</code>开启了静态<code>gzip</code>功能时，<code>nginx</code>会直接把这个压缩好的<code>gz</code>格式的压缩文件返回给前端。</p> <p>这样既减轻了<code>nginx</code>服务器的负担，又加快了响应速度。而且静态<code>gzip</code>可以由前端设置压缩级别，压缩出的大小可能还比服务器动态<code>gzip</code>压缩出的要小。</p> <p><code>nginx</code>开启静态<code>gzip</code>的配置如下：</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code>// nginx.conf
+<span class="token function">gzip</span> on<span class="token punctuation">;</span>
+gzip_static on<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>不使用静态<code>gzip</code>，只依赖<code>nginx</code>的动态<code>gzip</code>：</p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/20210817165128.png" alt="image-20210817165128282"></p> <p>使用静态<code>gzip</code>：</p> <p><img src="https://gitee.com/hjb2722404/tuchuang/raw/master/img/20210817170313.png" alt="image-20210817170313315"></p> <p>静态<code>gzip</code>在<code>vue</code>程序中的配置：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// vue.config.js</span>
+<span class="token keyword">const</span> CompressionWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'compression-webpack-plugin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> productionGzipExtensions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'js'</span><span class="token punctuation">,</span> <span class="token string">'css'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token operator">...</span><span class="token punctuation">.</span>
+
+configureWebpack<span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token comment">// devtool: 'source-map',</span>
+        plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token comment">// 配置compression-webpack-plugin压缩</span>
+            <span class="token keyword">new</span> <span class="token class-name">CompressionWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                test<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token string">'\\.('</span> <span class="token operator">+</span> productionGzipExtensions<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'|'</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">')$'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                compressionOptions<span class="token operator">:</span> <span class="token punctuation">{</span> level<span class="token operator">:</span> <span class="token number">9</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// level最大为9，数字越大，压缩级别越高</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>当然，这需要安装<code>compression-webpack-plugin</code>插件。安装时要注意版本兼容性，否则如果插件版本过高，会报错：</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token comment">// package.json</span>
+<span class="token property">&quot;devDependencies&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    ...
+    <span class="token property">&quot;compression-webpack-plugin&quot;</span><span class="token operator">:</span> <span class="token string">&quot;4.0.1&quot;</span><span class="token punctuation">,</span>
+    ...
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div></div></div></div></div></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.cd8205c8.js" defer></script><script src="/assets/js/11.4c288b74.js" defer></script><script src="/assets/js/109.3145253b.js" defer></script>
+  </body>
+</html>
